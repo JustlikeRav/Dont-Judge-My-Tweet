@@ -14,10 +14,17 @@ auth.set_access_token(access_token, access_token_secret)
 
 api = tweepy.API(auth)
 
-public_tweets = api.search('Trump')
+# public_tweets = api.search('Trump')
 
-for tweet in public_tweets:
+i = 0
+for tweet in tweepy.Cursor(api.search,
+                           q="google",
+                           count=1,
+                           result_type="recent",
+                           include_entities=True,
+                           lang="en").items():
     print(tweet.text)
 
     wiki = TextBlob(tweet.text)
-    print(wiki.sentiment.polarity)
+    print("      " + wiki.sentiment.polarity)
+    
